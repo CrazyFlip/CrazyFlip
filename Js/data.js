@@ -8,7 +8,7 @@ import {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-/* ============ PRODUCTS ============ */
+/* ========== PRODUCTS ========== */
 export async function getProducts() {
   const snap = await getDocs(collection(db, "products"));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -23,7 +23,7 @@ export async function deleteProduct(id) {
   return deleteDoc(doc(db, "products", id));
 }
 
-/* ============ BANNERS ============ */
+/* ========== BANNERS ========== */
 export async function getBanners() {
   const snap = await getDocs(collection(db, "banners"));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -38,19 +38,9 @@ export async function deleteBanner(id) {
   return deleteDoc(doc(db, "banners", id));
 }
 
-/* ============ ORDERS ============ */
+/* ========== ORDERS ========== */
 export async function addOrder(data) {
   return addDoc(collection(db, "orders"), data);
-}
-export async function getOrders() {
-  const snap = await getDocs(collection(db, "orders"));
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
-}
-export async function updateOrder(id, data) {
-  return updateDoc(doc(db, "orders", id), data);
-}
-export async function deleteOrder(id) {
-  return deleteDoc(doc(db, "orders", id));
 }
 export function listenOrders(cb) {
   return onSnapshot(collection(db, "orders"), snap => {
@@ -59,12 +49,18 @@ export function listenOrders(cb) {
     cb(orders);
   });
 }
+export async function updateOrder(id, data) {
+  return updateDoc(doc(db, "orders", id), data);
+}
+export async function deleteOrder(id) {
+  return deleteDoc(doc(db, "orders", id));
+}
 export async function generateOrderId() {
   const snap = await getDocs(collection(db, "orders"));
   return `CF-${1001 + snap.size}`;
 }
 
-/* ============ SETTINGS ============ */
+/* ========== SETTINGS ========== */
 export async function getSettings() {
   const snap = await getDoc(doc(db, "settings", "main"));
   return snap.exists() ? snap.data() : {
