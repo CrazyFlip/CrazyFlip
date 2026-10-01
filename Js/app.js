@@ -1,6 +1,4 @@
-import {
-  getProducts, getBanners, getSettings, addOrder, generateOrderId
-} from './data.js';
+import { getProducts, getBanners, getSettings, addOrder, generateOrderId } from './data.js';
 
 let products = [], banners = [], settings = {};
 let currentProduct = null, currentPlan = null;
@@ -18,7 +16,7 @@ async function init() {
   } catch (e) {
     console.error(e);
     document.getElementById('productsGrid').innerHTML =
-      '<div class="loading">Firebase connection failed</div>';
+      '<div class="loading">Firebase connection failed. Check config & rules.</div>';
   }
 }
 
@@ -26,25 +24,25 @@ let bannerIndex = 0, bannerTimer;
 function renderBanners() {
   const el = document.getElementById('bannerSlider');
   if (!banners.length) return;
-  el.innerHTML = banners.map((b,i) => `
-    <div class="banner-slide ${i===0?'active':''}"
+  el.innerHTML = banners.map((b, i) => `
+    <div class="banner-slide ${i === 0 ? 'active' : ''}"
          style="background-image:url('${b.image}')">
       <h2>${b.title || ''}</h2>
     </div>
   `).join('') + `<div class="banner-dots">${
-    banners.map((_,i)=>`<span class="${i===0?'active':''}" data-i="${i}"></span>`).join('')
+    banners.map((_, i) => `<span class="${i === 0 ? 'active' : ''}" data-i="${i}"></span>`).join('')
   }</div>`;
   el.querySelectorAll('.banner-dots span').forEach(dot => {
     dot.onclick = () => goBanner(+dot.dataset.i);
   });
-  bannerTimer = setInterval(() => goBanner((bannerIndex+1)%banners.length), 4000);
+  bannerTimer = setInterval(() => goBanner((bannerIndex + 1) % banners.length), 4000);
 }
 function goBanner(i) {
   bannerIndex = i;
-  document.querySelectorAll('.banner-slide').forEach((s,idx) =>
-    s.classList.toggle('active', idx===i));
-  document.querySelectorAll('.banner-dots span').forEach((d,idx) =>
-    d.classList.toggle('active', idx===i));
+  document.querySelectorAll('.banner-slide').forEach((s, idx) =>
+    s.classList.toggle('active', idx === i));
+  document.querySelectorAll('.banner-dots span').forEach((d, idx) =>
+    d.classList.toggle('active', idx === i));
 }
 
 function renderProducts(list) {
@@ -53,8 +51,8 @@ function renderProducts(list) {
     grid.innerHTML = '<div class="loading">No products yet.</div>';
     return;
   }
-  grid.innerHTML = list.map((p,i) => `
-    <div class="product-card" style="animation-delay:${i*.05}s">
+  grid.innerHTML = list.map((p, i) => `
+    <div class="product-card" style="animation-delay:${i * .05}s">
       <img src="${p.image}" alt="${p.name}"
         onerror="this.src='https://via.placeholder.com/300x180/111/fff?text=CF'"/>
       <div class="pc-body">
@@ -82,14 +80,14 @@ function openProduct(id) {
   document.getElementById('pdDesc').textContent = currentProduct.description || '';
   const plans = currentProduct.plans || [];
   currentPlan = plans[0] || null;
-  document.getElementById('pdPlans').innerHTML = plans.map((pl,i) => `
-    <div class="plan-item ${i===0?'active':''}" data-i="${i}">
+  document.getElementById('pdPlans').innerHTML = plans.map((pl, i) => `
+    <div class="plan-item ${i === 0 ? 'active' : ''}" data-i="${i}">
       <span>${pl.name}</span><b>GH₵ ${pl.price}</b>
     </div>
   `).join('');
   document.querySelectorAll('.plan-item').forEach(item => {
     item.onclick = () => {
-      document.querySelectorAll('.plan-item').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.plan-item').forEach(x => x.classList.remove('active'));
       item.classList.add('active');
       currentPlan = plans[+item.dataset.i];
       document.getElementById('pdPrice').textContent = `GH₵ ${currentPlan.price}`;
@@ -115,7 +113,7 @@ document.getElementById('copyMomo').onclick = () => {
   navigator.clipboard.writeText(settings.momoNumber || '');
   const b = document.getElementById('copyMomo');
   b.textContent = 'COPIED!';
-  setTimeout(()=>b.textContent='COPY',1500);
+  setTimeout(() => b.textContent = 'COPY', 1500);
 };
 
 async function confirmOrder(method) {
@@ -127,7 +125,7 @@ async function confirmOrder(method) {
   await addOrder({
     orderId, product: currentProduct.name, plan: currentPlan.name,
     price: currentPlan.price, whatsappNumber: wp, transactionId: tx,
-    date: new Date().toISOString().slice(0,10),
+    date: new Date().toISOString().slice(0, 10),
     status: 'Pending', createdAt: Date.now()
   });
 
@@ -147,11 +145,11 @@ ${tx}`;
   const encoded = encodeURIComponent(msg);
 
   if (method === 'whatsapp') {
-    const num = (settings.whatsapp || '').replace(/\D/g,'');
+    const num = (settings.whatsapp || '').replace(/\D/g, '');
     if (!num) return alert('Admin WhatsApp number set করা নেই');
     window.open(`https://wa.me/${num}?text=${encoded}`, '_blank');
   } else {
-    const tg = (settings.telegram || '').replace('@','');
+    const tg = (settings.telegram || '').replace('@', '');
     if (!tg) return alert('Admin Telegram set করা নেই');
     navigator.clipboard.writeText(msg);
     window.open(`https://t.me/${tg}`, '_blank');
