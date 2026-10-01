@@ -8,12 +8,10 @@ let allProducts = [];
 async function load() {
   allProducts = await getProducts();
   const list = document.getElementById('productsList');
-
   if (!allProducts.length) {
     list.innerHTML = '<p style="color:#666">No products yet.</p>';
     return;
   }
-
   list.innerHTML = allProducts.map(p => `
     <div class="item-card">
       <div class="item-info">
@@ -26,10 +24,8 @@ async function load() {
       </div>
     </div>
   `).join('');
-
   list.querySelectorAll('[data-edit]').forEach(b =>
     b.onclick = () => productForm(allProducts.find(x => x.id === b.dataset.edit)));
-
   list.querySelectorAll('[data-del]').forEach(b =>
     b.onclick = async () => {
       if (confirm('Delete product?')) { await deleteProduct(b.dataset.del); load(); }
@@ -44,13 +40,12 @@ function productForm(p) {
     <label>Name</label><input id="fpName" value="${p?.name || ''}" />
     <label>Image URL</label><input id="fpImage" value="${p?.image || ''}" />
     <label>Description</label><textarea id="fpDesc" rows="3">${p?.description || ''}</textarea>
-    <label>Plans (Plan Name|Price, প্রতিটি নতুন লাইনে)</label>
+    <label>Plans (Plan Name|Price — প্রতি লাইনে একটা)</label>
     <textarea id="fpPlans" rows="4" placeholder="1 Month|30&#10;3 Months|90&#10;6 Months|170">${
       (p?.plans || []).map(x => `${x.name}|${x.price}`).join('\n')
     }</textarea>
     <button class="save-btn" id="fpSave">SAVE</button>
   `);
-
   document.getElementById('fpSave').onclick = async () => {
     const plans = document.getElementById('fpPlans').value
       .split('\n').map(l => l.trim()).filter(Boolean)
@@ -58,21 +53,16 @@ function productForm(p) {
         const [name, price] = l.split('|').map(s => s.trim());
         return { name, price: Number(price) || 0 };
       });
-
     const data = {
       name: document.getElementById('fpName').value.trim(),
       image: document.getElementById('fpImage').value.trim(),
       description: document.getElementById('fpDesc').value.trim(),
       plans
     };
-
     if (!data.name || !data.image) return alert('Name & Image URL দিন');
-
     if (p) await updateProduct(p.id, data);
     else await addProduct(data);
-
-    modal.close();
-    load();
+    modal.close(); load();
   };
 }
 
