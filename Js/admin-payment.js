@@ -1,4 +1,4 @@
-import { renderSidebar } from './admin-shared.js';
+limport { renderSidebar } from './admin-shared.js';
 import { getSettings, saveSettings } from './data.js';
 
 document.getElementById('sidebar').innerHTML = renderSidebar('payment');
