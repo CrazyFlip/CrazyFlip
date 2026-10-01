@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel | CRAZY FLIP</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="logo"><i class="fas fa-bolt"></i> CRAZY FLIP <span>Admin</span></div>
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Site</a>
+  </header>
+
+  <main class="admin-container">
+
+    <!-- FORM -->
+    <section class="admin-card">
+      <h2 id="formTitle"><i class="fas fa-plus-circle"></i> Add Product</h2>
+
+      <form id="productForm">
+        <input type="hidden" id="productId" />
+
+        <label>Product Name</label>
+        <input type="text" id="pName" placeholder="e.g. Netflix Premium" required />
+
+        <label>Description</label>
+        <textarea id="pDesc" rows="3" placeholder="Short description..."></textarea>
+
+        <label>Image URL (optional)</label>
+        <input type="text" id="pImage" placeholder="https://..." />
+
+        <label>Plans</label>
+        <div id="plansContainer"></div>
+        <button type="button" class="btn-secondary" id="addPlanBtn"><i class="fas fa-plus"></i> Add Plan</button>
+
+        <button type="submit" class="btn-primary" id="submitBtn"><i class="fas fa-save"></i> Save Product</button>
+        <button type="button" class="btn-cancel" id="cancelEditBtn" style="display:none;">Cancel Edit</button>
+      </form>
+    </section>
+
+    <!-- LIST -->
+    <section class="admin-card">
+      <h2><i class="fas fa-list"></i> All Products</h2>
+      <div id="adminProductList" class="admin-product-list"></div>
+    </section>
+
+  </main>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
