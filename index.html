@@ -10,36 +10,36 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
-  <div class="logo" id="siteLogo">CRAZY<span>FLIP</span></div>
+  <div class="logo" id="siteLogo">CRAZY<span style="opacity:.5">FLIP</span></div>
   <div class="search-wrap">
     <input id="searchInput" type="text" placeholder="Search products..." />
   </div>
 </header>
 
-<!-- BANNER SLIDER -->
 <section class="banner-slider" id="bannerSlider">
-  <div class="banner-loading">Loading...</div>
-</section>
-
-<!-- PRODUCTS -->
-<section class="products-section">
-  <h2 class="section-title">OUR PRODUCTS</h2>
-  <div class="products-grid" id="productsGrid">
-    <div class="loading">Loading products...</div>
+  <div class="banner-slide active" style="background:#0a0a0a">
+    <h2>WELCOME TO CRAZY FLIP</h2>
   </div>
 </section>
 
-<!-- FOOTER -->
+<section class="products-section">
+  <h2 class="section-title">OUR PRODUCTS</h2>
+  <div class="products-grid" id="productsGrid">
+    <div class="loading">Loading...</div>
+  </div>
+</section>
+
 <footer class="footer">
   <p id="footerName">CRAZY FLIP © 2026</p>
-  <div id="footerLinks"></div>
+  <div style="margin-top:10px">
+    <a href="admin/index.html">Admin Panel</a>
+  </div>
 </footer>
 
-<!-- PRODUCT DETAILS POPUP -->
+<!-- PRODUCT POPUP -->
 <div class="popup" id="productPopup">
-  <div class="popup-box product-box">
+  <div class="popup-box">
     <button class="close-btn" data-close>&times;</button>
     <div class="product-detail">
       <img id="pdImage" src="" alt="">
@@ -64,13 +64,14 @@
     <div class="pay-info">
       <div class="pay-row"><span>Product</span><b id="payProduct"></b></div>
       <div class="pay-row"><span>Plan</span><b id="payPlan"></b></div>
-      <div class="pay-row"><span>Total Price</span><b id="payPrice"></b></div>
+      <div class="pay-row"><span>Total</span><b id="payPrice"></b></div>
       <div class="pay-row"><span>Method</span><b>Ghana Cedis (GHS)</b></div>
     </div>
 
     <div class="pay-box">
-      <p id="payText">Send Money to the number below, then enter your details.</p>
-      <div class="momo-row"><span>MoMo Number</span><b id="payMomo"></b>
+      <p id="payText"></p>
+      <div class="momo-row">
+        <span>MoMo Number</span><b id="payMomo"></b>
         <button class="copy-btn" id="copyMomo">COPY</button>
       </div>
       <div class="momo-row"><span>Account Name</span><b id="payAcc"></b></div>
@@ -93,6 +94,5 @@
 </div>
 
 <script type="module" src="js/app.js"></script>
-<script src="js/firebase-config.js"></script>
 </body>
 </html>
