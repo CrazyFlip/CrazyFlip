@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Payment — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+<div class="admin-wrap">
+  <div id="sidebar"></div>
+  <main class="main">
+    <h1>Payment Settings</h1>
+    <div class="form-card">
+      <label>MoMo Number</label>
+      <input id="setMomo" type="text" placeholder="024XXXXXXX" />
+      <label>Account Name</label>
+      <input id="setAcc" type="text" />
+      <label>Payment Text</label>
+      <textarea id="setPayText" rows="3"></textarea>
+      <button class="save-btn" id="saveBtn">SAVE</button>
+    </div>
+  </main>
+</div>
+
+<script type="module">
+  import { renderSidebar } from '../js/admin-shared.js';
+  import { getSettings, saveSettings } from '../js/data.js';
+  document.getElementById('sidebar').innerHTML = renderSidebar('payment');
+
+  const s = await getSettings();
+  document.getElementById('setMomo').value = s.momoNumber || '';
+  document.getElementById('setAcc').value = s.accountName || '';
+  document.getElementById('setPayText').value = s.paymentText || '';
+
+  document.getElementById('saveBtn').onclick = async () => {
+    await saveSettings({
+      momoNumber: document.getElementById('setMomo').value.trim(),
+      accountName: document.getElementById('setAcc').value.trim(),
+      paymentText: document.getElementById('setPayText').value.trim()
+    });
+    alert('Saved!');
+  };
+</script>
+</body>
+</html>
