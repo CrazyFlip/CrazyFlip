@@ -47,10 +47,8 @@ listenOrders(orders => {
 
   list.querySelectorAll('[data-complete]').forEach(b =>
     b.onclick = () => updateOrder(b.dataset.complete, { status: 'Completed' }));
-
   list.querySelectorAll('[data-cancel]').forEach(b =>
     b.onclick = () => updateOrder(b.dataset.cancel, { status: 'Cancelled' }));
-
   list.querySelectorAll('[data-del]').forEach(b =>
     b.onclick = () => { if (confirm('Delete order?')) deleteOrder(b.dataset.del); });
 });
