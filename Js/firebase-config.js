@@ -11,5 +11,5 @@ const firebaseConfig = {
 };
 
 // Admin WhatsApp/Telegram (order confirm এ যাবে)
-export const ADMIN_WHATSAPP = "+233000000000";
-export const ADMIN_TELEGRAM = "your_telegram_username";
+export const ADMIN_WHATSAPP = "+2330531340410";
+export const ADMIN_TELEGRAM = "@Gam_bo12";
